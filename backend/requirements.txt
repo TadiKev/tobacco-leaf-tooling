@@ -1,0 +1,13 @@
+Django>=4.2
+djangorestframework>=3.14
+djangorestframework-simplejwt[blacklist]>=5.2
+
+gunicorn
+pillow
+uvicorn[standard]
+psycopg2-binary
+numpy
+scikit-learn
+whitenoise
+django-cors-headers>=4.0
+requests

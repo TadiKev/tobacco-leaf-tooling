@@ -1,0 +1,4 @@
+frogeye_spot
+alternaria_spot
+angular_spot
+healthy

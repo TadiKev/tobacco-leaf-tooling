@@ -1,0 +1,4 @@
+# ml/Dockerfile.fastapi
+FROM tensorflow/tensorflow:2.15.0
+
+RUN pip install --no-cache-dir uvicorn[standard] fastapi

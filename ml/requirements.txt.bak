@@ -1,0 +1,18 @@
+
+tensorflow
+
+# Optional helpers for augmentations (script falls back if not available)
+tensorflow-addons
+uvicorn[standard]
+# TensorFlow.js converter (CLI / python -m tensorflowjs_converter)
+tensorflowjs
+
+# Data + utilities
+pandas
+scikit-learn
+numpy
+Pillow
+
+# Convenience / plotting (optional)
+tqdm
+matplotlib

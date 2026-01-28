@@ -1,0 +1,18 @@
+# docker/Dockerfile.train
+FROM python:3.10-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential git wget unzip libglib2.0-0 libsm6 libxrender1 libxext6 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY ml/requirements.txt /workspace/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /workspace/requirements.txt
+
+# create workspace dirs
+RUN mkdir -p /workspace/saved_models /workspace/tfjs_model_output
+
+# default command: open a bash (override at runtime)
+CMD ["/bin/bash"]

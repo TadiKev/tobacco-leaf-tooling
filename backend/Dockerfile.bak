@@ -1,0 +1,30 @@
+# backend/Dockerfile
+FROM python:3.11-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /code
+
+# Retry-friendly apt-get: try update several times with short backoff,
+# then install required OS packages and clean cache.
+RUN set -eux; \
+    retries=5; \
+    count=0; \
+    until [ $count -ge $retries ]; do \
+      apt-get update && break || { count=$((count+1)); echo "apt-get update failed, retry #${count}"; sleep 5; }; \
+    done; \
+    apt-get install -y --no-install-recommends \
+      build-essential libpq-dev libjpeg-dev zlib1g-dev libffi-dev wget curl git ca-certificates \
+    || (apt-get update && apt-get install -y --no-install-recommends \
+      build-essential libpq-dev libjpeg-dev zlib1g-dev libffi-dev wget curl git ca-certificates); \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy python requirements and install
+COPY requirements.txt /code/requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r /code/requirements.txt
+
+# Copy backend source
+COPY . /code
+
+# Expose port and default command (adjust if your app uses different entrypoint)
+EXPOSE 8000
+CMD ["./entrypoint.sh"]
